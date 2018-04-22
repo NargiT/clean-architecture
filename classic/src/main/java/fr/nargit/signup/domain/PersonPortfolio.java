@@ -1,5 +1,7 @@
 package fr.nargit.signup.domain;
 
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PERSONS_PORTFOLIOS")
+@Builder
 public class PersonPortfolio {
 
 	@Id
@@ -22,7 +25,7 @@ public class PersonPortfolio {
 	private String username;
 
 	@Column(name = "portfolio_id")
-	private String portfolioId;
+	private Long portfolioId;
 
 	@Column(name = "person_id")
 	private Long personId;

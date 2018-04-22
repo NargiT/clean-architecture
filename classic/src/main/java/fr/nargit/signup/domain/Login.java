@@ -1,6 +1,7 @@
 package fr.nargit.signup.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "LOGINS")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class Login {
 
 	@Id
