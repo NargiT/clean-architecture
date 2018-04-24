@@ -2,7 +2,6 @@ package fr.nargit.signup.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -17,15 +16,15 @@ import javax.persistence.Table;
 @Getter
 public class Portfolio {
 
-  @Id
-  @GeneratedValue(generator = "increment")
-  @GenericGenerator(name = "increment", strategy = "increment")
-  @Column(name = "portfolio_id")
-  private Long portfolioId;
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
+	@Column(name = "portfolio_id")
+	private Long portfolioId;
 
-  @Column(name = "type")
-  private Long type;
+	@Column(name = "type")
+	private Long type;
 
-  @Column(name = "status")
-  private Integer status;
+	@Column(name = "status")
+	private Integer status;
 }

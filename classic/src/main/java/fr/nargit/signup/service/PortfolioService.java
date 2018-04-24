@@ -8,24 +8,24 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PortfolioService {
 
-  private PortfolioDao portfolioDao;
+	private PortfolioDao portfolioDao;
 
-  public Long createPortfolio(SignupData signupData) {
-    final String type = signupData.getType();
-    Long portfolioType ;
-    if ("TRADING".equals(type)) {
-      portfolioType = 1L;
-    } else {
-      throw new IllegalArgumentException("Do not support other than TRADING portfolio");
-    }
-    final int aNew = 1;
-    final Portfolio portfolio = Portfolio.builder()
-        .status(aNew)
-        .type(portfolioType)
-        .build();
+	public Long createPortfolio(SignupData signupData) {
+		final String type = signupData.getType();
+		Long portfolioType;
+		if ("TRADING".equals(type)) {
+			portfolioType = 1L;
+		} else {
+			throw new IllegalArgumentException("Do not support other than TRADING portfolio");
+		}
+		final int aNew = 1;
+		final Portfolio portfolio = Portfolio.builder()
+				.status(aNew)
+				.type(portfolioType)
+				.build();
 
-    portfolioDao.save(portfolio);
+		portfolioDao.save(portfolio);
 
-    return portfolio.getPortfolioId();
-  }
+		return portfolio.getPortfolioId();
+	}
 }

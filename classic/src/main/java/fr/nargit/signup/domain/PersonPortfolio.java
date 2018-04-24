@@ -1,7 +1,6 @@
 package fr.nargit.signup.domain;
 
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;

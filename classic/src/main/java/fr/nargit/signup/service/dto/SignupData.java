@@ -9,12 +9,12 @@ import java.util.Date;
 @Builder
 public class SignupData {
 
-  // profile
-  private String firstname;
-  private String lastName;
-  private Date birthDate;
-  private String email;
+	// profile
+	private String firstname;
+	private String lastName;
+	private Date birthDate;
+	private String email;
 
-  // portfolio
-  private String type;
+	// portfolio
+	private String type;
 }
