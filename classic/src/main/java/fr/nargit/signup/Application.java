@@ -6,11 +6,11 @@ import fr.nargit.signup.dao.LoginDao;
 import fr.nargit.signup.dao.PersonDao;
 import fr.nargit.signup.dao.PersonPortfolioDao;
 import fr.nargit.signup.dao.PortfolioDao;
-import fr.nargit.signup.service.LinkService;
-import fr.nargit.signup.service.LoginService;
-import fr.nargit.signup.service.PortfolioService;
-import fr.nargit.signup.service.ProfileService;
-import fr.nargit.signup.service.SignupService;
+import fr.nargit.signup.dao.impl.LoginDaoImpl;
+import fr.nargit.signup.dao.impl.PersonDaoImpl;
+import fr.nargit.signup.dao.impl.PersonPortfolioDaoImpl;
+import fr.nargit.signup.dao.impl.PortfolioDaoImpl;
+import fr.nargit.signup.service.*;
 import fr.nargit.signup.service.dto.SignupData;
 
 import javax.persistence.EntityManager;
@@ -20,65 +20,65 @@ import java.util.Date;
 
 public class Application {
 
-	private EntityManager entityManager;
-	private LoginDao loginDao;
-	private PersonDao personDao;
-	private PortfolioDao portfolioDao;
-	private PersonPortfolioDao personPortfolioDao;
+  private EntityManager entityManager;
+  private LoginDao loginDao;
+  private PersonDao personDao;
+  private PortfolioDao portfolioDao;
+  private PersonPortfolioDao personPortfolioDao;
 
-	private LoginService loginService;
-	private ProfileService profileService;
-	private PortfolioService portfolioService;
-	private LinkService linkService;
-	private PasswordService passwordService;
-	private EmailService emailService;
-	private SignupService signupService;
+  private LoginService loginService;
+  private ProfileService profileService;
+  private PortfolioService portfolioService;
+  private LinkService linkService;
+  private PasswordService passwordService;
+  private EmailService emailService;
+  private SignupService signupService;
 
-	private void init() {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("fr.nargit.domain");
-		this.entityManager = entityManagerFactory.createEntityManager();
+  private void init() {
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("fr.nargit.domain");
+    this.entityManager = entityManagerFactory.createEntityManager();
 
-		this.loginDao = new LoginDao(entityManager);
-		this.personDao = new PersonDao(entityManager);
-		this.portfolioDao = new PortfolioDao(entityManager);
-		this.personPortfolioDao = new PersonPortfolioDao(entityManager);
+    this.loginDao = new LoginDaoImpl(entityManager);
+    this.personDao = new PersonDaoImpl(entityManager);
+    this.portfolioDao = new PortfolioDaoImpl(entityManager);
+    this.personPortfolioDao = new PersonPortfolioDaoImpl(entityManager);
 
-		this.profileService = new ProfileService(personDao);
-		this.portfolioService = new PortfolioService(portfolioDao);
-		this.linkService = new LinkService(personPortfolioDao);
-		this.passwordService = new PasswordService() {
-			@Override
-			public void generatePassord(String username) {
+    this.profileService = new ProfileService(personDao);
+    this.portfolioService = new PortfolioService(portfolioDao);
+    this.linkService = new LinkService(personPortfolioDao);
+    this.passwordService = new PasswordService() {
+      @Override
+      public void generatePassord(String username) {
 
-			}
-		};
-		this.loginService = new LoginService(loginDao, passwordService);
-		this.emailService = new EmailService() {
-			@Override
-			public void sendEmail(String email, String subject, String content) {
+      }
+    };
+    this.loginService = new LoginService(loginDao, passwordService);
+    this.emailService = new EmailService() {
+      @Override
+      public void sendEmail(String email, String subject, String content) {
 
-			}
-		};
-		this.signupService = new SignupService(loginService, linkService, profileService, portfolioService, emailService);
-	}
+      }
+    };
+    this.signupService = new SignupService(loginService, linkService, profileService, portfolioService, emailService);
+  }
 
-	public void start() {
-		init();
-		entityManager.getTransaction().begin();
-		final SignupData signupData = SignupData.builder()
-				.firstname("tig")
-				.lastName("tch")
-				.email("tig.tch@nargit.fr")
-				.birthDate(new Date())
-				.type("TRADING")
-				.build();
-		try {
-			signupService.registerFull(signupData);
-			entityManager.getTransaction().commit();
-		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
-		} finally {
-			entityManager.close();
-		}
-	}
+  public void start() {
+    init();
+    entityManager.getTransaction().begin();
+    final SignupData signupData = SignupData.builder()
+        .firstname("tig")
+        .lastName("tch")
+        .email("tig.tch@nargit.fr")
+        .birthDate(new Date())
+        .type("TRADING")
+        .build();
+    try {
+      signupService.registerFull(signupData);
+      entityManager.getTransaction().commit();
+    } catch (Exception e) {
+      entityManager.getTransaction().rollback();
+    } finally {
+      entityManager.close();
+    }
+  }
 }

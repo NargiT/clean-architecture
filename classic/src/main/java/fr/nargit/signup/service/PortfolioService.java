@@ -1,6 +1,7 @@
 package fr.nargit.signup.service;
 
 import fr.nargit.signup.dao.PortfolioDao;
+import fr.nargit.signup.dao.impl.PortfolioDaoImpl;
 import fr.nargit.signup.domain.Portfolio;
 import fr.nargit.signup.service.dto.SignupData;
 import lombok.AllArgsConstructor;
@@ -8,24 +9,31 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PortfolioService {
 
-	private PortfolioDao portfolioDao;
+  private PortfolioDao portfolioDao;
 
-	public Long createPortfolio(SignupData signupData) {
-		final String type = signupData.getType();
-		Long portfolioType;
-		if ("TRADING".equals(type)) {
-			portfolioType = 1L;
-		} else {
-			throw new IllegalArgumentException("Do not support other than TRADING portfolio");
-		}
-		final int aNew = 1;
-		final Portfolio portfolio = Portfolio.builder()
-				.status(aNew)
-				.type(portfolioType)
-				.build();
+  public Long createPortfolio(SignupData signupData) {
+    final String type = signupData.getType();
+    Long portfolioType;
+    if ("TRADING".equals(type)) {
+      portfolioType = 1L;
+    } else {
+      throw new IllegalArgumentException("Do not support other than TRADING portfolio");
+    }
+    final int aNew = 1;
 
-		portfolioDao.save(portfolio);
+    final Portfolio portfolio = Portfolio.builder()
+        .portfolioId(nextSequence())
+        .status(aNew)
+        .type(portfolioType)
+        .build();
 
-		return portfolio.getPortfolioId();
-	}
+    portfolioDao.save(portfolio);
+
+    return portfolio.getPortfolioId();
+  }
+
+  private Long nextSequence() {
+    // use db sequence
+    return 2L;
+  }
 }
