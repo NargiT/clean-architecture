@@ -12,15 +12,17 @@ What the business wants
 * firstname
 * lastname
 * email
+* login to access his account
+* username use first char of firstname, 3 char last name then random 4 numbers in [0-9]
 * birthdate -> must be adult
 * choose portfolio trading
 * portfolio is in status created
 * send password & login by email
 * notify backoffice with the new account
 
-What the developper wants 
-* develop !
-* avoid to touch legacy code (business rules are legacy ???)
+What the developer may like 
+* develop new cool feature
+* avoid to touch legacy code (are business rules legacy ?)
 * easy to test any changes
 * use cool technology without breaking business rules
 * do not depend from anyone
